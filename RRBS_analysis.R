@@ -33,7 +33,18 @@ write.csv(Diff_DMR,"Diff_DMR.csv")
 write.csv(Diff_DMR_hypo,"Diff_DMR_hipometylacja")
 write.csv(Diff_DMR_hiper,"Diff_DMR_hipermetylacja")
 
+#Hipermetylacja i hipometylacja na wykresie
+val1 = table(Diff_DMR_hiper$chr)
+val2 = table(Diff_DMR_hipo$chr)
+count <- bind_rows(val1,val2)
+matrix_count <- as.matrix(count)
+matrix_count[is.na(matrix_count)] <- 0
 
+colours <- c("red", "green")
+barplot(matrix_count, main="Hipermetylowane i Hipometylowane DMR", ylab = "Liczba DMR", xlab="chromosomy", beside=TRUE,col=colours)
+legend("topright", c("Hipo","Hiper"), cex=1.3, bty="n", fill=colours)
 
-
+#Wykres przestawiający DMR dla każdego chromosomu
+count <- table(DMR$chr)
+barplot(count,main= "DMR",ylab="Liczba DMR", xlab ="chromosomy",beside=TRUE,col = "grey",cex.lab = 1.5, cex.main = 1.4,las=1, cex.names=.7)
 
