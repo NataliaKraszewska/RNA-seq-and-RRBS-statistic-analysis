@@ -15,7 +15,7 @@ for (i in loop.vector)
 }
 
 # Identyfikacja DMR
-tiles=tileMethylCounts(myobj,win.size=1000,step.size=1000)
+tiles=tileMethylCounts(myobj,win.size=1000,step.size=500)
 x=unite(tiles, destrand=FALSE)
 DMR = calculateDiffMeth(x) # 946
 
