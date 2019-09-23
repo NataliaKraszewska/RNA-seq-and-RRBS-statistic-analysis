@@ -15,23 +15,25 @@ for (i in loop.vector)
 }
 
 # Identyfikacja DMR
-tiles=tileMethylCounts(myobj,win.size=1000,step.size=1000)
+tiles=tileMethylCounts(myobj,win.size=1000,step.size=500)
 x=unite(tiles, destrand=FALSE)
-DMR = calculateDiffMeth(x) # 946
+DMR = calculateDiffMeth(x) 
 
 # Identyfikacja różnie metylowanych DMR
-Diff_DMR=getMethylDiff(DMR,difference=5,qvalue=0.01) #68
+Diff_DMR=getMethylDiff(DMR,difference=5,qvalue=0.01) 
 
 #Identyfikacja hipometylowanych DMR, mniej metylowane niż grupa
-Diff_DMR_hypo=getMethylDiff(DMR,difference=5,qvalue=0.01,type="hypo") #25
+Diff_DMR_hypo=getMethylDiff(DMR,difference=5,qvalue=0.01,type="hypo") 
 
 #Identyfikacja hipermetylowanych DMR, bardziej metylowane niż grupa
-Diff_DMR_hiper=getMethylDiff(DMR,difference=5,qvalue=0.01,type="hyper") #43
+Diff_DMR_hiper=getMethylDiff(DMR,difference=5,qvalue=0.01,type="hyper") 
 
 write.csv(DMR,"DMR.csv")
 write.csv(Diff_DMR,"Diff_DMR.csv")
 write.csv(Diff_DMR_hypo,"Diff_DMR_hipometylacja")
 write.csv(Diff_DMR_hiper,"Diff_DMR_hipermetylacja")
+
+
 
 
 
