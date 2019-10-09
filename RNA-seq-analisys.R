@@ -15,6 +15,7 @@ rawCountTable <- read.csv("counts_rna.csv",header=TRUE,sep=',',row.names=2)
 #usuń niepotrzebą kolumnę
 rawCountTable <- rawCountTable[,-c(0:1)]
 #dodaj informacje, które próby pochodzą od osób zdrowych, a które od chorych
+
 sampleInfo <-read.csv("info.csv",header=TRUE, sep=',',row.names=1)
 
 #Utworzenie obiektu DGEList
@@ -56,7 +57,11 @@ rawCountTable <- read.csv("counts_rna.csv",header=TRUE,sep=',',row.names=2)
 #usuń niepotrzebą kolumnę
 rawCountTable <- rawCountTable[,-c(0:1)]
 #dodaj informacje, które próby pochodzą od osób zdrowych, a które od chorych
-sampleInfo <-read.csv("info.csv",header=TRUE, sep=',',row.names=1)
+#sampleInfo <-read.csv("info.csv",header=TRUE, sep=',',row.names=1)
+#sampleInfo <-read.csv("info_CV.csv",header=TRUE, sep=',',row.names=1)
+#sampleInfo <-read.csv("info_PP.csv",header=TRUE, sep=',',row.names=1)
+sampleInfo <-read.csv("info_IZ.csv",header=TRUE, sep=',',row.names=1)
+
 
 #Utworzenie obiektu DGEList
 dgeFull <- DGEList(rawCountTable, group=sampleInfo$condition)
@@ -93,13 +98,16 @@ plotMD(dgeTestFilt)
 resFilt <- topTags(dgeTestFilt, n=nrow(dgeTest$table))
 wynik <- sigDownReg <- resFilt$table[resFilt$table$FDR<0.01,]
 dim(wynik)
-write.csv(wynik,"DEG_RNA.csv")
+#write.csv(wynik,"DEG_RNA.csv")
+#write.csv(wynik,"DEG_RNA_CV.csv")
+#write.csv(wynik,"DEG_RNA_PP.csv")
+write.csv(wynik,"DEG_RNA_IZ.csv")
 
 #wykres przedstawiający poziom ekspresji wybranych genów wbadanych próbach    
 y <- cpm(dgeFull, log=TRUE, prior.count = 1)
 selY <- y[rownames(resFilt$table)[resFilt$table$FDR<0.01 & 
                                     abs(resFilt$table$logFC)>1.5],]
-cimColor <- colorRampPalette(rev(brewer.pal(9, "Blues")))(255)[255:1]
+cimColor <- colorRampPalette(rev(brewer.pal(n = 7,"Greens")))(255)[255:1]
 finalHM <- cim(t(selY), color=cimColor, symkey=FALSE)
 
 
